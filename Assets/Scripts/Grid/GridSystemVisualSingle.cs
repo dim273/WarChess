@@ -12,8 +12,9 @@ public class GridSystemVisualSingle : MonoBehaviour
         m_Renderer.enabled = false;
     }
 
-    public void Show()
+    public void Show(Material _material)
     {
+        m_Renderer.material = _material;
         m_Renderer.enabled = true;
     }
 }

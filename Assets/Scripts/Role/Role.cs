@@ -6,6 +6,8 @@ using UnityEngine;
 public class Role : MonoBehaviour
 {
     public static event EventHandler OnAnyActionPointsChanged;
+    public static event EventHandler OnAnyRoleSpawned;
+    public static event EventHandler OnAnyRoleDead;
 
     [Header("Config")]
     [SerializeField] private int maxActionPoints;
@@ -14,42 +16,51 @@ public class Role : MonoBehaviour
     private int actionPoints;
 
     private GridPosition gridPosition;
+    private HealthSystem healthSystem;
 
     private MoveAction moveAction;
     private DefenseAction defenseAction;
+    private AttackAction attackAction;
+
     private BaseAction[] baseActionArray;
     private void Awake()
     {
+        healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
         defenseAction = GetComponent<DefenseAction>();
+        attackAction = GetComponent<AttackAction>();
         baseActionArray = GetComponents<BaseAction>();
+        actionPoints = maxActionPoints;
+        
     }
     private void Start()
     {
-        actionPoints = maxActionPoints;
         gridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         LevelGrid.instance.AddRoleAtGridPosition(gridPosition, this);
 
         TurnSystem.instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        healthSystem.onRoleDie += healthSystem_onRoleDie;
+
+        OnAnyRoleSpawned?.Invoke(this, EventArgs.Empty);
     }
     private void Update()
     {
         GridPosition newGridPosition = LevelGrid.instance.GetGridPosition(transform.position);
         if (newGridPosition != gridPosition)
         {
-            LevelGrid.instance.RoleMovedGridPosition(this, gridPosition, newGridPosition);
+            GridPosition oldPos = gridPosition;
             gridPosition = newGridPosition;
+            LevelGrid.instance.RoleMovedGridPosition(this, oldPos, newGridPosition);
         }
     }
 
     public MoveAction GetMoveAction() => moveAction;
-
     public DefenseAction GetDefenseAction() => defenseAction;
+    public AttackAction GetAttackAction() => attackAction;
 
     public int GetActionPoint() => actionPoints;
-
     public Vector3 GetWorldPosition() => transform.position;
-
+    public float GetHealthNormalized() => healthSystem.GetHealthNormalized();
     public bool IsEnemy() => isEnemy;
 
     public GridPosition GetGridPosition()
@@ -97,8 +108,16 @@ public class Role : MonoBehaviour
         }
     }  
     
-    public void Damage()
+    public void Damage(int damage)
     {
-        Debug.Log("Damage");
+        healthSystem.Damage(damage);
+    }
+
+    private void healthSystem_onRoleDie(object sender, EventArgs e)
+    {
+        // À¿Õˆ
+        LevelGrid.instance.RemoveRoleAtGridPosition(gridPosition, this);
+        Destroy(gameObject);
+        OnAnyRoleDead?.Invoke(this, EventArgs.Empty);
     }
 }

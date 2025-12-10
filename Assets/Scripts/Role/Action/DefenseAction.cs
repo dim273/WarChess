@@ -33,12 +33,21 @@ public class DefenseAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action _onActionComplete)
     {
-        ActionStart(_onActionComplete);
         totalSpinAmount = 0f;
+        ActionStart(_onActionComplete);
     }
 
     public override int GetActionPointsCost()
     {
         return 2;
+    }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPos)
+    {
+        return new EnemyAIAction
+        {
+            gridPosition = gridPos,
+            activeValue = 0
+        };
     }
 }

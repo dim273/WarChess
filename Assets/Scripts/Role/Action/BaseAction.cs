@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour
 {
+    public event EventHandler onActionStarted;
+    public event EventHandler onActionFinished;
+
     protected Role role;
     protected bool isActive;
     protected Action onActionComplete;
@@ -33,11 +36,40 @@ public abstract class BaseAction : MonoBehaviour
     {
         isActive = true;
         onActionComplete = _onActionComplete;
+        onActionStarted?.Invoke(this, EventArgs.Empty);
     }
 
     protected void ActionComplete()
     {
         isActive = false;
         onActionComplete();
+        onActionFinished?.Invoke(this, EventArgs.Empty);
     }
+
+    public Role GetRole() { return role; }
+
+    // µÐÈË×¨Êô´úÂë
+    /**************************************************************************/
+    public EnemyAIAction GetBestEnemyAIAction()
+    {
+        List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
+        List<GridPosition> vaildActionGridPositionList = GetValidActionGridPositionList();
+        foreach (GridPosition gridPosition in vaildActionGridPositionList)
+        {
+            EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPosition);
+            enemyAIActionList.Add(enemyAIAction);
+        }
+
+        if (enemyAIActionList.Count > 0)
+        {
+            enemyAIActionList.Sort((EnemyAIAction a, EnemyAIAction b) => b.activeValue - a.activeValue);
+            return enemyAIActionList[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public abstract EnemyAIAction GetEnemyAIAction(GridPosition gridPos);
 }

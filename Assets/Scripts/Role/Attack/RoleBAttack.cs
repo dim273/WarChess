@@ -6,15 +6,17 @@ public class Role_B_Attack : RoleAttackBase
 {
     [Header("Config")]
     [SerializeField] private TrailRenderer trail;
-    [SerializeField] private GameObject hitFX;
+    [SerializeField] private Transform hitFX;
     [SerializeField] private float speed;
 
     private float posY;
+    
  
     public override void SetUp(Vector3 _targetPos)
     {
-        targetPos = _targetPos;
+        targetGridPos = LevelGrid.instance.GetGridPosition(_targetPos);
         posY = transform.position.y;
+        targetPos = new Vector3(_targetPos.x, posY, _targetPos.z);
     }
 
     private void Update()
@@ -27,12 +29,12 @@ public class Role_B_Attack : RoleAttackBase
 
         if (distanceAfterMoving > distanceBeforeMoving) 
         {
+            Role target = LevelGrid.instance.GetRoleAtGridPosition(targetGridPos);
+            target.Damage(damage);
             transform.position = targetPos;
-
+            Instantiate(hitFX, transform.position, Quaternion.identity);
             trail.transform.parent = null;
             Destroy(gameObject);
-            Instantiate(hitFX, targetPos, Quaternion.identity);
         }
     }
-
 }

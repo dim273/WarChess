@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 274592934750221295}
   - component: {fileID: -1982107421242838556}
   m_Layer: 0
-  m_Name: RoleB_Attack
+  m_Name: Enemy_Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8fcbef3a43ec84ab8e3d4f36de8037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 5
   trail: {fileID: 2157482798511528300}
-  hitFX: {fileID: 7827447529486962644, guid: 72663124b93465747ab390096ee33bf5, type: 3}
-  speed: 40
+  hitFX: {fileID: 7827447529486962644, guid: d9d2d4e53c19ea34b86cf9b5c686bf3f, type: 3}
+  speed: 100
 --- !u!1 &2530632696087451935
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 332909732481315284}
   - component: {fileID: 2157482798511528300}
   m_Layer: 0
-  m_Name: RoleB_Attack_FX
+  m_Name: Enemy_Attack_FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ad1def9f53de78439294764300a741a, type: 2}
+  - {fileID: 2100000, guid: 2682b6233465ff34d9b7a6d108268369, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

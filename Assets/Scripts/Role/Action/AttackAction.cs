@@ -86,6 +86,12 @@ public class AttackAction : BaseAction
 
     public override List<GridPosition> GetValidActionGridPositionList()
     {
+        GridPosition roleGridPos = role.GetGridPosition();
+        return GetValidActionGridPositionList(roleGridPos);
+    }
+
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition roleGridPos)
+    {
         // 获取可以移动的区域
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
@@ -120,13 +126,13 @@ public class AttackAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action _onActionComplete)
     {
-        ActionStart(_onActionComplete);
-
         targetRole = LevelGrid.instance.GetRoleAtGridPosition(gridPosition);
 
         state = State.Aiming;
         stateTimer = aimingStateTime;
         canAttack = true;
+
+        ActionStart(_onActionComplete);
     }
 
     public override int GetActionPointsCost()
@@ -141,7 +147,26 @@ public class AttackAction : BaseAction
             targetRole = targetRole,
             attackingRole = role
         });
-        targetRole.Damage();
     }
 
+    public int GetAttackRange()
+    {
+        return maxAttackDistance;
+    }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPos)
+    {
+        Role targetRole = LevelGrid.instance.GetRoleAtGridPosition(gridPos);
+
+        return new EnemyAIAction
+        {
+            gridPosition = gridPos,
+            activeValue = 100 + Mathf.RoundToInt((1 - targetRole.GetHealthNormalized()) * 100f)
+        };
+    }
+
+    public int GetTargetCountAtPosition(GridPosition gridPosition)
+    {
+        return GetValidActionGridPositionList(gridPosition).Count;
+    }
 }

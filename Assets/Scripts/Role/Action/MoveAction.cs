@@ -43,9 +43,9 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action _onActionComplete)
     {
-        ActionStart(_onActionComplete);
         targetPosition = LevelGrid.instance.GetWorldPosition(gridPosition);
         OnMoveStart?.Invoke(this, EventArgs.Empty);
+        ActionStart(_onActionComplete);
     }
 
     public override List<GridPosition> GetValidActionGridPositionList()
@@ -79,5 +79,17 @@ public class MoveAction : BaseAction
     public override string GetName()
     {
         return "ÒÆ¶¯";
+    }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPos)
+    {
+        int tagetCountAtGridPosition = 
+            role.GetAttackAction().GetTargetCountAtPosition(gridPos);
+
+        return new EnemyAIAction
+        {
+            gridPosition = gridPos,
+            activeValue = 10 * tagetCountAtGridPosition,
+        };
     }
 }

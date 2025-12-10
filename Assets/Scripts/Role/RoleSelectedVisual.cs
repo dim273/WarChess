@@ -33,4 +33,9 @@ public class RoleSelectedVisual : MonoBehaviour
         else 
             meshRenderer.enabled = false;
     }
+
+    private void OnDestroy()
+    {
+        RoleActionSystem.instance.OnSelectedRoleChanged -= RoleManager_OnSelectedRoleChanged;
+    }
 }

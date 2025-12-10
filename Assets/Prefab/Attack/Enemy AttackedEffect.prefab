@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8004554581440815179}
   - component: {fileID: 3834926250997446279}
   m_Layer: 0
-  m_Name: RoleB AttackedEffect
+  m_Name: Enemy AttackedEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4835,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ad1def9f53de78439294764300a741a, type: 2}
+  - {fileID: 2100000, guid: 2682b6233465ff34d9b7a6d108268369, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

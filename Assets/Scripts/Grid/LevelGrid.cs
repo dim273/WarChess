@@ -1,9 +1,13 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelGrid : Singleton<LevelGrid>
 {
+    public event EventHandler onRoleMoveToNewGird;
+
     [SerializeField] private Transform gridDebugPrefab;
 
     private GridSystem gridSystem;
@@ -37,6 +41,7 @@ public class LevelGrid : Singleton<LevelGrid>
     {
         RemoveRoleAtGridPosition(fromPos, role);
         AddRoleAtGridPosition(toPos, role);
+        onRoleMoveToNewGird?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetWidth() => gridSystem.GetWidth();
