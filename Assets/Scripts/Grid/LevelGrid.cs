@@ -10,13 +10,14 @@ public class LevelGrid : Singleton<LevelGrid>
 
     [SerializeField] private Transform gridDebugPrefab;
 
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
 
     protected override void Awake()
     {
         base.Awake();
-        gridSystem = new GridSystem(10, 10, 2f);
-        gridSystem.CreateDebugObjects(gridDebugPrefab);
+        gridSystem = new GridSystem<GridObject>(10, 10, 2f, 
+            (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
+        // gridSystem.CreateDebugObjects(gridDebugPrefab);
     }
 
     public void AddRoleAtGridPosition(GridPosition gridPosition, Role role)

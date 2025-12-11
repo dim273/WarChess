@@ -18,17 +18,10 @@ public class Role : MonoBehaviour
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
 
-    private MoveAction moveAction;
-    private DefenseAction defenseAction;
-    private AttackAction attackAction;
-
     private BaseAction[] baseActionArray;
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-        moveAction = GetComponent<MoveAction>();
-        defenseAction = GetComponent<DefenseAction>();
-        attackAction = GetComponent<AttackAction>();
         baseActionArray = GetComponents<BaseAction>();
         actionPoints = maxActionPoints;
         
@@ -54,9 +47,17 @@ public class Role : MonoBehaviour
         }
     }
 
-    public MoveAction GetMoveAction() => moveAction;
-    public DefenseAction GetDefenseAction() => defenseAction;
-    public AttackAction GetAttackAction() => attackAction;
+    public T GetAction<T>() where T : BaseAction
+    {
+        foreach (BaseAction action in baseActionArray)
+        {
+            if (action is T)
+            {
+                return (T)action;
+            }
+        }
+        return null;
+    }
 
     public int GetActionPoint() => actionPoints;
     public Vector3 GetWorldPosition() => transform.position;

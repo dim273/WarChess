@@ -8,14 +8,14 @@ public class GridDebugObject: MonoBehaviour
     // 该代码用于测试体显示数据
     [SerializeField] private TextMeshPro textMeshPro;
 
-    private GridObject gridObject;
+    private object gridObject;
 
-    private void Update()
+    protected virtual void Update()
     {
         textMeshPro.text = gridObject.ToString();
     }
 
-    public void SetGridObject(GridObject gridObject)
+    public virtual void SetGridObject(object gridObject)
     {
         this.gridObject = gridObject;
     }

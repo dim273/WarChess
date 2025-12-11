@@ -78,7 +78,7 @@ public class RoleActionSystem : Singleton<RoleActionSystem>
     private void SetSelectedRole(Role role)
     {
         selectedRole = role;
-        SetSelectedAction(role.GetMoveAction());
+        SetSelectedAction(role.GetAction<MoveAction>());
         OnSelectedRoleChanged?.Invoke(this, EventArgs.Empty);
     }
 
