@@ -167,7 +167,7 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 15
   stoppingDistance: 0.1
-  maxMoveDistance: 2
+  maxMoveDistance: 3
 --- !u!114 &8998185509660492470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +196,9 @@ MonoBehaviour:
   aimingStateTime: 0.2
   attackingStateTime: 0.4
   cooloffStateTime: 0.2
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &1697014948918265297
 MonoBehaviour:
   m_ObjectHideFlags: 0

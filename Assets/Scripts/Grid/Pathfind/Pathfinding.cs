@@ -9,6 +9,7 @@ public class Pathfinding : Singleton<Pathfinding>
 
     [Header("Config")]
     [SerializeField] private Transform gridDebugObjectrefab;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     private int width;
     private int height;
@@ -18,12 +19,35 @@ public class Pathfinding : Singleton<Pathfinding>
     protected override void Awake()
     {
         base.Awake();
-        gridSystem = new GridSystem<PathNode>(10, 10, 2f,
-            (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
-        gridSystem.CreateDebugObjects(gridDebugObjectrefab);
     }
 
-    public List<GridPosition> FindPath(GridPosition startGridPos,  GridPosition endGridPos)
+    public void SetUp(int _width, int _height, float _cellSize)
+    {
+        width = _width; height = _height; cellSize = _cellSize;
+        gridSystem = new GridSystem<PathNode>(width, height, cellSize,
+            (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+        gridSystem.CreateDebugObjects(gridDebugObjectrefab);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                Vector3 worldPos = LevelGrid.instance.GetWorldPosition(gridPosition);
+                float raycastOffsetDistance = 5f;
+                if (Physics.Raycast(
+                    worldPos + Vector3.down * raycastOffsetDistance,
+                    Vector3.up,
+                    raycastOffsetDistance * 2,
+                    obstacleLayerMask)) 
+                {
+                    GetNode(x, z).SetWalkable(false);
+                }
+            }
+        }
+    }
+
+    public List<GridPosition> FindPath(GridPosition startGridPos,  GridPosition endGridPos, out int pathLengh)
     {
         List<PathNode> openList = new List<PathNode>();
         List<PathNode> closeList = new List<PathNode>();
@@ -58,6 +82,7 @@ public class Pathfinding : Singleton<Pathfinding>
             // µΩ¥Ô÷’µ„
             if (curNode == endNode)
             {
+                pathLengh = endNode.GetFCost();
                 return CalculatePath(endNode);
             }
 
@@ -68,6 +93,12 @@ public class Pathfinding : Singleton<Pathfinding>
             {
                 if (closeList.Contains(neighbourNode))
                     continue;
+                if(!neighbourNode.GetWalkable())
+                {
+                    closeList.Add(neighbourNode);
+                    continue;
+                }
+
                 int tentativeGCost = curNode.GetGCost() + CalculateDistance(curNode.GetGridPosition(), neighbourNode.GetGridPosition());
 
                 if (tentativeGCost < neighbourNode.GetGCost()) 
@@ -84,6 +115,7 @@ public class Pathfinding : Singleton<Pathfinding>
                 }
             }
         }
+        pathLengh = 0;
         return null;
     }
 
@@ -162,5 +194,21 @@ public class Pathfinding : Singleton<Pathfinding>
             gridPositionList.Add(pathNode.GetGridPosition());
         }
         return gridPositionList;
+    }
+
+    public bool IsWalkableGridPosition(GridPosition gridPosition)
+    {
+        return gridSystem.GetGridObject(gridPosition).GetWalkable();
+    }
+
+    public bool HasPath(GridPosition startGridPosition,  GridPosition endGridPosition)
+    {
+        return FindPath(startGridPosition, endGridPosition, out int pathLength) != null;
+    }
+
+    public int GetPathLength(GridPosition startGridPosition, GridPosition endGridPosition)
+    {
+        FindPath(startGridPosition, endGridPosition, out int pathLength);
+        return pathLength;
     }
 }

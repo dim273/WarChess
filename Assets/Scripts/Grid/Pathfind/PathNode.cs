@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PathNode
 {
-
     private GridPosition gridPosition;
     private int gCost;
     private int hCost;
     private int fCost;
     private PathNode cameFromPathNode;
+    private bool isWalkable = true;
 
     public PathNode(GridPosition gridPosition)
     {
@@ -27,6 +27,7 @@ public class PathNode
     public int GetFCost() => fCost;
     public PathNode GetCameFromPathNode() => cameFromPathNode;
     public GridPosition GetGridPosition() => gridPosition;
+    public bool GetWalkable() => isWalkable;
     #endregion
 
     #region SetValuesInPathNode
@@ -53,6 +54,11 @@ public class PathNode
     public void SetCameFromPathNode(PathNode _pathNode)
     {
         cameFromPathNode = _pathNode;
+    }
+
+    public void SetWalkable(bool _walkable)
+    {
+        isWalkable = _walkable;
     }
     #endregion
 }

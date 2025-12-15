@@ -22,6 +22,6 @@ public class PathfindingGridDebugObject : GridDebugObject
         base.Update();
         gCostText.text = pathNode.GetGCost().ToString();
         hCostText.text = pathNode.GetHCost().ToString();
-        fCostText.text = pathNode.GetFCost().ToString();    
+        fCostText.text = pathNode.GetFCost().ToString();
     }
 }

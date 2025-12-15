@@ -26,6 +26,7 @@ public class AttackAction : BaseAction
     [SerializeField] private float aimingStateTime;
     [SerializeField] private float attackingStateTime;
     [SerializeField] private float cooloffStateTime;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     private float stateTimer;
 
@@ -116,6 +117,18 @@ public class AttackAction : BaseAction
 
                 Role targetRole = LevelGrid.instance.GetRoleAtGridPosition(testGridPosition);
                 if (targetRole == null || targetRole.IsEnemy() == role.IsEnemy()) continue;
+
+                Vector3 roleWorldPos = LevelGrid.instance.GetWorldPosition(roleGridPos);
+                Vector3 attackDir = (targetRole.GetWorldPosition() - roleWorldPos).normalized;
+                float roleShoulderHeight = 1.7f;
+                if (Physics.Raycast(
+                    roleWorldPos + Vector3.up * roleShoulderHeight,
+                    attackDir,
+                    Vector3.Distance(roleWorldPos, targetRole.GetWorldPosition()),
+                    obstacleLayerMask))
+                {
+                    continue;
+                }
 
                 validGridPositionList.Add(testGridPosition);
             }
