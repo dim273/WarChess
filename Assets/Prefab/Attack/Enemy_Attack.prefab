@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8fcbef3a43ec84ab8e3d4f36de8037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   trail: {fileID: 2157482798511528300}
   hitFX: {fileID: 7827447529486962644, guid: d9d2d4e53c19ea34b86cf9b5c686bf3f, type: 3}
   speed: 100

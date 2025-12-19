@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb3acda8962840e46b0a85b0b9a6badf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxActionPoints: 4
+  maxActionPoints: 2
   isEnemy: 1
 --- !u!114 &8021694785592625840
 MonoBehaviour:
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a306be394832c4d9539d4ad4b81bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAttackDistance: 4
+  maxAttackDistance: 3
   aimingStateTime: 0.2
   attackingStateTime: 0.4
   cooloffStateTime: 0.2

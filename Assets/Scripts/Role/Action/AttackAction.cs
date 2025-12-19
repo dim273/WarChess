@@ -49,8 +49,11 @@ public class AttackAction : BaseAction
         {
             case State.Aiming:
                 Vector3 aimDir = (targetRole.GetWorldPosition() - role.GetWorldPosition()).normalized;
-                float rotateSpeed = 12f;
-                transform.forward = Vector3.Lerp(transform.forward, aimDir, rotateSpeed * Time.deltaTime);
+                float rotateSpeed = 20f;
+                if (!role.IsEnemy())
+                    transform.forward = Vector3.Lerp(transform.forward, -aimDir, rotateSpeed * Time.deltaTime);
+                else
+                    transform.forward = Vector3.Lerp(transform.forward, aimDir, rotateSpeed * Time.deltaTime);
                 break;
             case State.Attacking:
                 if(canAttack)

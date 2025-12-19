@@ -24,7 +24,10 @@ public class MoveAction : BaseAction
 
         Vector3 targetPosition = positionList[curPositionListIndex];
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
-        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+        if (role.IsEnemy())
+            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+        else
+            transform.forward = Vector3.Lerp(transform.forward, -moveDirection, Time.deltaTime * rotationSpeed);
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
             transform.position += moveDirection * moveSpeed * Time.deltaTime;

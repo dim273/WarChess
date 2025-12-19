@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (UIManager.instance.gameStop)
+            return;
         MoveHandle();
         RotateHandle();
         ZoomHandle();
