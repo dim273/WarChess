@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.cysharp.r3": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
+    "com.cysharp.unitask": "https://gitee.com/wgslucky/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "2.10.5",
     "com.unity.collab-proxy": "2.10.2",
@@ -12,6 +14,7 @@
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.4",
+    "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -40,7 +43,6 @@
     "com.unity.modules.unitywebrequestwww": "1.0.0",
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
-    "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
   }
