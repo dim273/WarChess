@@ -1,4 +1,5 @@
 # WarChess：R3 + VContainer 技术交接
+> 2026-09-17：已实际保存 Game/Menu 和三个单位预制体的挂载；当前 22 个实例挂载、6 个启用参战，23 项核心检查通过。最新组件映射、运行验收、备份和限制见 [SceneIntegrationReport.md](SceneIntegrationReport.md)。下文旧日期的“尚未挂载/尚未验证”是当时记录。
 > 2026-09-13 更新：项目 Cinemachine 已升级为 3.1.7。BattleCameraView 已使用 Unity.Cinemachine 命名空间，Cvc 类型为 CinemachineVirtualCameraBase；新版相机使用 CinemachineFollow.FollowOffset，未迁移的旧 Transposer 通过兼容分支处理。已使用项目实际 Unity.Cinemachine.dll 完成该脚本编译验证，尚未验证场景运行。下文 2026-09-11 的包版本和兼容问题属于历史记录，不代表当前版本。
 
 更新：2026-09-11。适用代码：`Assets/Scripts`。阅读挂载步骤请看同目录的 [SceneSetup.md](SceneSetup.md)。

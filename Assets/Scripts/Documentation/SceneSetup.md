@@ -1,5 +1,5 @@
 # 当前 Game/Menu 场景挂载说明
-依据 2026-09-11 的场景和预制体序列化内容。代码已改好；下列 Unity 操作尚未自动执行。技术背景见 [TechnicalGuide.md](TechnicalGuide.md)。
+2026-09-17 更新：Game/Menu 已通过 Unity Editor 资产接口实际完成挂载并保存。22 个角色实例已挂 UnitView；BattleInstaller 仅注册当前启用的角色，禁用的备用敌人不自动启用。最新映射、备份及验证结果见 [SceneIntegrationReport.md](SceneIntegrationReport.md)。技术背景见 [TechnicalGuide.md](TechnicalGuide.md)。下文保留为手动重建说明，不需要在现有场景重复挂载。
 
 ## 0. 先完成依赖检查
 
@@ -158,7 +158,7 @@
 
 ## 6. Game 的暂停菜单与导航
 
-在 Canvas 添加 **SceneControlsView**，绑定 Pause Panel=现有 **MenuPanel**，并把该组件拖入 BattleInstaller.Scene Controls。SceneControlsView 本身不要挂在会被关闭的 MenuPanel 内。
+在 Canvas 添加 **SceneControlsView**，绑定 Pause Panel=现有 **Menu** 父对象（包含 MenuPanel 背景和 ButtonList 按钮），并把该组件拖入 BattleInstaller.Scene Controls。SceneControlsView 本身不要挂在会被关闭的 Menu 内。
 
 删除旧 UIManager 的持久按钮事件，再设置：
 
@@ -170,7 +170,7 @@
 | BackToMenuButton | SceneControlsView.BackToMenu |
 | ExitButton | SceneControlsView.Quit |
 
-MenuPanel 初始不激活。暂停面板背景应拦截 UI 射线。Pause 同时暂停 AI、移动与攻击表现；Resume 恢复。重开/回主菜单会恢复 Time.timeScale=1。
+Menu 父对象初始不激活，MenuPanel 子对象保持启用。暂停面板背景应拦截 UI 射线。Pause 同时暂停 AI、移动与攻击表现；Resume 恢复。重开/回主菜单会恢复 Time.timeScale=1。
 
 ## 7. Menu 场景
 
