@@ -146,7 +146,8 @@
 
 在原 **CameraController** 物体上添加 **BattleCameraView**，移除旧 CameraController。
 
-- Cvc：拖入原脚本引用的 **CinemachineVirtualCamera**。
+- Cvc：当前 Cinemachine 3.1.7 可拖入 **CinemachineCamera**；场景未迁移时也支持原 **CinemachineVirtualCamera**。不要拖 Main Camera。
+- 新版相机的 Position Control 使用 **Follow（CinemachineFollow）**，Tracking Target 指向该 CameraController 物体；脚本通过 Follow Offset 的 Y 值缩放。旧相机继续使用原 Body/Transposer，不必为本次修复重建场景。
 - Move Speed=10、Rotation Speed=100、Zoom Speed=5，可沿用现有值。
 - 保留 Main Camera 上 CinemachineBrain，以及虚拟相机原 Follow/LookAt/Body 设置。
 - 保留该对象原位置/父子层级，不需要将脚本挂到 Main Camera。
